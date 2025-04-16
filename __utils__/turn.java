@@ -19,9 +19,9 @@ private void turnByAngel(double angel) {
     double targetAngel = currentAngel + angel;
     
     if(targetAngel < 0.0)
-        targetAngel = 360.0 - Math.abs(currentAngel + angel);
+    targetAngel = 360.0 - Math.abs(currentAngel + angel);
     else if(targetAngel > 360.0)
-        targetAngel = targetAngel - 360.0;
+    targetAngel = targetAngel - 360.0;
     
     boolean shouldTurnLeft = shortestRotation(currentAngel, targetAngel) < 0;
     
@@ -38,9 +38,15 @@ private void turnByAngel(double angel) {
 }
 
 private double shortestRotation(double startAngle, double targetAngle) {
-    double delta = targetAngle - startAngle;
+    double delta = (targetAngle - startAngle) % 360;
     
-    double step1 = delta + 180.0;
-    int step2 = step1 % 360;
-    return step2 - 180;
+    // Shift range to [-180, 180]
+    if (delta > 180) {
+        delta -= 360;
+    } 
+    else if (delta < -180) {
+        delta += 360;
+    }
+    
+    return delta;
 }
