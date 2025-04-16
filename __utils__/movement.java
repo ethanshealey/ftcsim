@@ -13,3 +13,14 @@ private void goForTime(int ms) {
   sleep(ms);
   stop();
 }
+
+private void goUntilDist(int dist) {
+    go();
+    while(getDist() > dist)
+        sleep(20);
+    stop();
+}
+
+private int getDist() {
+    return distance1.getDistance(DistanceUnit.CM);
+}
