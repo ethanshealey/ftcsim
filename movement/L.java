@@ -22,7 +22,7 @@ public class MyFIRSTJavaOpMode extends LinearOpMode {
       goUntilDist(35);
       turnLeft();
       goUntilDist(40);
-      turnByAngel(180);
+      turnByAngle(180);
       goUntilDist(40);
     }
     
@@ -60,29 +60,29 @@ public class MyFIRSTJavaOpMode extends LinearOpMode {
     }
     
     private void turnLeft() {
-        turnByAngel(-90.0);
+        turnByAngle(-90.0);
     }
     
     private void turnRight() {
-        turnByAngel(90.0);
+        turnByAngle(90.0);
     }
     
-    private void turnByAngel(double angel) {
-        double currentAngel = imu.getAngularOrientation();
-        double targetAngel = currentAngel + angel;
+    private void turnByAngle(double angle) {
+        double currentAngle = imu.getAngularOrientation();
+        double targetAngle = currentAngle + angle;
+
+        if(targetAngle < 0.0)
+            targetAngle = 360.0 - Math.abs(currentAngle + angle);
+        else if(targetAngle > 360.0)
+            targetAngle = targetAngle - 360.0;
         
-        if(targetAngel < 0.0)
-        targetAngel = 360.0 - Math.abs(currentAngel + angel);
-        else if(targetAngel > 360.0)
-        targetAngel = targetAngel - 360.0;
-        
-        boolean shouldTurnLeft = shortestRotation(currentAngel, targetAngel) < 0;
+        boolean shouldTurnLeft = shortestRotation(currentAngle, targetAngle) < 0;
         
         motorLeft.setPower(shouldTurnLeft ? -.5 : .5);
         motorRight.setPower(shouldTurnLeft ? .5 : -.5);
         
-        while(!((currentAngel > targetAngel - .1) && (currentAngel < targetAngel + .1))) {
-            currentAngel = imu.getAngularOrientation();
+        while(!((currentAngle > targetAngle - .1) && (currentAngle < targetAngle + .1))) {
+            currentAngle = imu.getAngularOrientation();
             sleep(2);
         }
         
@@ -91,10 +91,16 @@ public class MyFIRSTJavaOpMode extends LinearOpMode {
     }
     
     private double shortestRotation(double startAngle, double targetAngle) {
-        double delta = targetAngle - startAngle;
-    
-        double step1 = delta + 180.0;
-        int step2 = step1 % 360;
-        return step2 - 180;
+        double delta = (targetAngle - startAngle) % 360;
+        
+        // Shift range to [-180, 180]
+        if (delta > 180) {
+            delta -= 360;
+        } 
+        else if (delta < -180) {
+            delta += 360;
+        }
+        
+        return delta;
     }
 }
