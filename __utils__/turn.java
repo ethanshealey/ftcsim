@@ -37,7 +37,10 @@ private void turnByAngel(double angel) {
     motorRight.setPower(0);
 }
 
-private int shortestRotation(int startAngle, int targetAngle) {
-    int delta = targetAngle - startAngle;
-    return ((delta + 180) % 360) - 180;
+private double shortestRotation(double startAngle, double targetAngle) {
+    double delta = targetAngle - startAngle;
+    
+    double step1 = delta + 180.0;
+    int step2 = step1 % 360;
+    return step2 - 180;
 }
