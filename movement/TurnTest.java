@@ -17,18 +17,18 @@ public class MyFIRSTJavaOpMode extends LinearOpMode {
     DistanceSensor distance1;
     BNO055IMU imu;
 
-@Override
+    @Override
     public void runOpMode() {
-      init();
-      
-      turnRight();
-      goUntilDist(40);
-      turnLeft();
-      goUntilDist(40);
-      turnByAngle(-45);
-      goUntilDist(40);
-      turnByAngle(45);
-      goUntilDist(40);
+        init();
+        
+        turnRight();
+        goUntilDist(40);
+        turnLeft();
+        goUntilDist(40);
+        turnByAngle(-45);
+        goUntilDist(40);
+        turnByAngle(45);
+        goUntilDist(40);
     }
     
     public void init() {
