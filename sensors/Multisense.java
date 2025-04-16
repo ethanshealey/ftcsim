@@ -105,7 +105,7 @@ public class MyFIRSTJavaOpMode extends LinearOpMode {
         stop();
     }
     
-    private void getDist() {
+    private int getDist() {
         return distance1.getDistance(DistanceUnit.CM);
     }
     
